@@ -17,13 +17,35 @@ const AssetForm = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.assetName || !formData.amount || !formData.buyRate) return;
+    
+    if (!formData.assetName.trim()) {
+      alert('자산명을 입력해주세요.');
+      return;
+    }
+    
+    if (!formData.amount || !formData.buyRate) {
+      alert('외화 금액과 매수 환율을 입력해주세요.');
+      return;
+    }
+
+    const parsedAmount = parseFloat(formData.amount);
+    const parsedBuyRate = parseFloat(formData.buyRate);
+
+    if (parsedAmount <= 0) {
+      alert('외화 금액은 0보다 커야 합니다.');
+      return;
+    }
+
+    if (parsedBuyRate <= 0) {
+      alert('매수 환율은 0보다 커야 합니다.');
+      return;
+    }
     
     addAsset({
-      assetName: formData.assetName,
+      assetName: formData.assetName.trim(),
       currency: formData.currency,
-      amount: parseFloat(formData.amount),
-      buyRate: parseFloat(formData.buyRate)
+      amount: parsedAmount,
+      buyRate: parsedBuyRate
     });
     onClose();
   };
