@@ -23,12 +23,13 @@ const Controls = ({ onOpenForm }) => {
         className="input-field" 
         value={filterCurrency} 
         onChange={(e) => setFilterCurrency(e.target.value)}
-        style={{ width: '150px' }}
+        style={{ width: '180px' }}
       >
         <option value="ALL">모든 통화</option>
         <option value="USD">USD (미국 달러)</option>
         <option value="JPY">JPY (일본 엔)</option>
         <option value="EUR">EUR (유로)</option>
+        <option value="KRW">KRW (원화 기초자금)</option>
       </select>
       
       <select 

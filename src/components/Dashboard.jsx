@@ -30,7 +30,7 @@ const Dashboard = () => {
   const currencyBreakdown = {};
 
   assets.forEach(asset => {
-    const currentRate = rates[asset.currency] || 0;
+    const currentRate = asset.currency === 'KRW' ? 1 : (rates[asset.currency] || 0);
     const invested = asset.amount * asset.buyRate;
     const currentVal = asset.amount * currentRate;
 
@@ -49,12 +49,12 @@ const Dashboard = () => {
       <div className="glass-panel">
         <h3 className="text-secondary">총 자산 가치 (KRW)</h3>
         <h1 style={{ fontSize: '2rem' }}>
-          {totalCurrentValue.toLocaleString('ko-KR', { maximumFractionDigits: 0 })} 원
+          {Math.floor(totalCurrentValue).toLocaleString('ko-KR')} 원
         </h1>
         <div style={{ marginTop: '1rem', fontSize: '1.1rem' }}>
           <span className="text-secondary">평가 손익: </span>
           <span className={isPositive ? 'text-success' : 'text-danger'}>
-            {totalPnL > 0 ? '+' : ''}{totalPnL.toLocaleString('ko-KR', { maximumFractionDigits: 0 })} 원 
+            {totalPnL > 0 ? '+' : ''}{Math.floor(totalPnL).toLocaleString('ko-KR')} 원 
             ({returnRate.toFixed(2)}%)
           </span>
         </div>
@@ -70,14 +70,14 @@ const Dashboard = () => {
               const percentage = ((value / totalCurrentValue) * 100).toFixed(1);
               return (
                 <div key={currency} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <span>{currency}</span>
+                  <span>{currency === 'KRW' ? '기초자금(KRW)' : currency}</span>
                   <strong>{percentage}%</strong>
                 </div>
               );
             })}
             <div style={{ width: '100%', height: '8px', background: 'var(--surface-border)', borderRadius: '4px', display: 'flex', overflow: 'hidden', marginTop: '1rem' }}>
               {Object.entries(currencyBreakdown).map(([currency, value], idx) => {
-                const colors = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
+                const colors = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
                 return (
                   <div 
                     key={currency} 
