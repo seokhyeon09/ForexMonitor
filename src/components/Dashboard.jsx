@@ -4,9 +4,25 @@ import { useExchangeRates } from '../context/ExchangeRateContext';
 
 const Dashboard = () => {
   const { assets } = useAssets();
-  const { rates, loading } = useExchangeRates();
+  const { rates, loading, error } = useExchangeRates();
 
-  if (loading || !rates) return <div className="glass-panel">환율 정보 로딩 중...</div>;
+  if (loading) {
+    return (
+      <div className="glass-panel" style={{ textAlign: 'center', padding: '3rem 1rem' }}>
+        <h2 className="text-secondary">⏳ 환율 정보를 불러오는 중입니다...</h2>
+        <p>잠시만 기다려주세요.</p>
+      </div>
+    );
+  }
+
+  if (error || !rates) {
+    return (
+      <div className="glass-panel" style={{ textAlign: 'center', padding: '3rem 1rem' }}>
+        <h2 className="text-danger">⚠️ 환율 데이터를 불러오지 못했습니다.</h2>
+        <p>네트워크 상태를 확인하거나 잠시 후 다시 시도해주세요.</p>
+      </div>
+    );
+  }
 
   let totalInvested = 0;
   let totalCurrentValue = 0;

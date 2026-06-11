@@ -32,8 +32,7 @@ export const ExchangeRateProvider = ({ children }) => {
         setError(null);
       } catch (err) {
         setError(err.message);
-        // Fallback dummy rates if API fails
-        setRates({ USD: 1350.50, JPY: 9.05, EUR: 1470.20 });
+        setRates(null);
       } finally {
         setLoading(false);
       }

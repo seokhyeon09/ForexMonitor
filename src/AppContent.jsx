@@ -26,11 +26,6 @@ const AppContent = () => {
         )}
       </header>
 
-      {error && (
-        <div className="glass-panel text-danger" style={{ marginBottom: '1.5rem', borderColor: 'var(--danger-color)' }}>
-          환율 정보를 불러오는데 실패했습니다. 마지막 저장된 환율 또는 임시 환율이 적용됩니다. ({error})
-        </div>
-      )}
 
       <Dashboard />
       
